@@ -40,7 +40,7 @@ const dbclient = new MongoClient(mdbConnectUrl, { useNewUrlParser: true });
 // Use connect method to connect to the Server
 dbclient.connect(function(err) {
 	assert.equal(null, err);
-	log.log.info("connected to mongodb ${dbName} ok");
+	log.log.info(`connected to mongodb ${dbName} ok`);
 	
 	const db = dbclient.db(dbName);
 
