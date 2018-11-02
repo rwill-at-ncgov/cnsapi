@@ -1,12 +1,12 @@
-const express = require('express')
-const path = require('path')
-const cookieParser = require('cookie-parser')
-const bodyParser = require('body-parser')
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 var expressWinston = require('express-winston');
 var winston = require('winston'); // for access log transports
 
-const log = require('./config/logging')
+const log = require('./config/logging');
 //log.log.level = 'debug'; Set this in ../config/logging now 
 log.log.info('cnsapi starting');
 console.log('cnsapi starting');
@@ -17,17 +17,19 @@ const serverConfig = require('./config/local_serverConfig');
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
-const users = require('./routes/users')
-const version = require('./routes/version')
+const users = require('./routes/users');
+const version = require('./routes/version');
+const createTestAlarm = require('./routes/createTestAlarm');
 
 const app = express()
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser())
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-app.use('/cnsapi/v1/users', users)
-app.use('/cnsapi/v1/version', version)
+app.use('/cnsapi/v1/users', users);
+app.use('/cnsapi/v1/version', version);
+app.use('/cnsapi/v1/createTestAlarm', createTestAlarm);
 
 // =======================================================================
 
@@ -43,9 +45,14 @@ dbclient.connect(function(err) {
 	log.log.info(`connected to mongodb ${dbName} ok`);
 	
 	const db = dbclient.db(dbName);
+	app.locals.db = db;
 
+    log.log.info(`Node.js app cnsapi is ready and listening at https://${serverConfig.serverHost}:${serverConfig.port}`);
+
+  /*
   dbclient.close();
   log.log.info("mongodb client connection closed");
+  */
 });
 
 // ==========================================================================
