@@ -37,9 +37,9 @@ const logger = createLogger({
             format: 'YYYY-MM-DD HH:mm:ss'
 		}),
 		printf(nfo => {
-			return `[${nfo.label}] ${nfo.level}: ${nfo.message}`;
-		}),
-		format.json()
+			return `${nfo.label} ${nfo.timestamp} - ${nfo.level}: ${nfo.message}`;
+		})
+		//format.json()
 	),
 	transports: [
 	/*
@@ -51,7 +51,7 @@ const logger = createLogger({
 	new (transports.File)({
       filename: `cnsapi.log`,
       //timestamp: tsFormat,
-	  //colorize: true,
+	  colorize: true,
     })
   ],
   level: "debug"
