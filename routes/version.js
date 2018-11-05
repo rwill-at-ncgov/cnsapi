@@ -4,9 +4,9 @@ const router = express.Router()
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.json({
-		version: "1.0",
+		version: "1.2",
 		by: "Rick Williams",
-		lastModDate: "20181023"		
+		lastModDate: "20181102"		
 	   })
 })
 

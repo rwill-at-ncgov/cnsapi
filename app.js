@@ -17,19 +17,21 @@ const serverConfig = require('./config/local_serverConfig');
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
-const users = require('./routes/users');
-const version = require('./routes/version');
-const createTestAlarm = require('./routes/createTestAlarm');
-
 const app = express()
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+const users = require('./routes/users');
+const version = require('./routes/version');
+const createTestAlarm = require('./routes/createTestAlarm');
+const addAlarm = require('./routes/addAlarm');
+
 app.use('/cnsapi/v1/users', users);
 app.use('/cnsapi/v1/version', version);
 app.use('/cnsapi/v1/createTestAlarm', createTestAlarm);
+app.use('/cnsapi/v1/addAlarm', addAlarm);
 
 // =======================================================================
 

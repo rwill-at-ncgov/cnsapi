@@ -5,28 +5,8 @@
 //const applog = require('winston');
 // for v3
 const { createLogger, format, transports } = require('winston');
-const tsFormat = () => (new Date()).toString();
 const logform = require('logform');
 const { combine, timestamp, label, printf } = logform.format;
-
-/*
-const logger = new (applog.Logger)({
-  transports: [
-	
-    new (applog.transports.Console)({ 
-		timestamp: tsFormat,
-		colorize: true,
-	}),
-
-	new (applog.transports.File)({
-      filename: `cnsapi.log`,
-      timestamp: tsFormat,
-	  colorize: true,
-    })
-  ],
-  level: "debug"
-});
-*/
 
 // for v3
 const logger = createLogger({
@@ -38,7 +18,8 @@ const logger = createLogger({
 		}),
 		printf(nfo => {
 			return `${nfo.label} ${nfo.timestamp} - ${nfo.level}: ${nfo.message}`;
-		})
+		}),
+		format.colorize()
 		//format.json()
 	),
 	transports: [
@@ -49,9 +30,7 @@ const logger = createLogger({
 	}),
 	*/
 	new (transports.File)({
-      filename: `cnsapi.log`,
-      //timestamp: tsFormat,
-	  colorize: true,
+      filename: `cnsapi.log`
     })
   ],
   level: "debug"

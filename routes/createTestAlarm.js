@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-//const log = require('./config/logging')
+const log = require('../config/logging');
 var ObjectID = require('mongodb').ObjectID
 
 /* create a test alarm in mongo */
@@ -25,6 +25,7 @@ router.get('/', function(req, res, next) {
 		res.json({status: "OK",
 			insertedId: r.insertedId.toString()
 		});
+		log.log.info(`test alarm created with id ${r.insertedId.toString()}`);
 	}).catch(function(err) {
 			log.log.error("mdb insert error: " + err.stack);
 			res.status(500);
