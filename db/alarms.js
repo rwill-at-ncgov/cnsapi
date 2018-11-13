@@ -20,7 +20,18 @@ function AlarmsDAO(database) {
 	
 	this.addAlarm = function(alarmInsertObject, callback) {
 		// add a new alarm
-		var mColl = this.db.collection('emonCnsAlarms');	
+		var mColl = this.db.collection('emonCnsAlarms');
+		
+		// add some fields we always want
+		var rightNow = new Date();
+		// see if this changes time to current localtime
+		//console.log("rightNow getHours =", rightNow.getHours());
+		//console.log("rightNow getUTCHours =", rightNow.getUTCHours());
+		//console.log("rightNow timezone offset =", rightNow.getTimezoneOffset());
+		alarmInsertObject.emonAlarmCreated = rightNow;
+		alarmInsertObject.emonAlarmCreatedETStr = rightNow.toLocaleString();
+		
+		
 		mColl.insertOne( alarmInsertObject, { forceServerObjectId: true } ).then(function(r) {
 			//console.log("inserted: ", r);
 			callback( r.ops );
